@@ -4,10 +4,12 @@ import mongoose from 'mongoose'
 mongoose.Promise = require('bluebird')
 import express from 'express'
 import habitsApi from './api'
+import bodyParser from 'body-parser'
 
 const app = express()
 
-
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 app.use('/habits', habitsApi)
 const server = http.createServer(app)
 

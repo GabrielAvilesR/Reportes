@@ -1,22 +1,35 @@
 import { Router } from 'express'
+import { create, showAll, show, destroy, addScore, substractScore } from './controller'
+import filterBody from './middleware/filterBody'
 
 const router = new Router()
-    
 
-router.post('/')
 
-router.get('/', (req, res) => {
-    res.status(200).send("HELLO")
-})
 
-router.get('/:id')
+//user
+//recibe name, influence, difficulty, owner
+router.post('/',
+    filterBody,
+    create)
+
+//admin
+router.get('/',
+    showAll)
+
+router.get('/:id',
+    show)
 
 router.get('/myHabits')
 
-router.delete('/:id')
+router.get('/myScore')
 
-router.put('/addScore/:id')
+router.delete('/:id',
+    destroy)
 
-router.put('/substractScore/:id')
+router.get('/addScore/:id',
+    addScore)
+
+router.get('/substractScore/:id',
+    substractScore)
 
 export default router
