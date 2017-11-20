@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { create, showAll, show, destroy, addScore, substractScore } from './controller'
+import { create, showAll, show, destroy, addScore, substractScore, showAllMine, showMine, deleteMine, myScore } from './controller'
 import filterBody from './middleware/filterBody'
 import { firebaseAuthUser, firebaseAuthAdmin } from './middleware/firebaseAuth'
 
@@ -23,23 +23,33 @@ router.get('/:id',
     firebaseAuthAdmin,
     show)
 
-router.get('/myHabits')
+router.get('/myHabits',
+    firebaseAuthUser,
+    showAllMine)
 
-router.get('/myHabit/:id')
+router.get('/myHabit/:id',
+    firebaseAuthUser,
+    showMine)
 
-router.delete('/myHabits/:id')
+router.delete('/myHabits/:id',
+    firebaseAuthUser,
+    deleteMine)
 
-router.get('/myScore')
+router.get('/myScore',
+    firebaseAuthUser,
+    myScore)
 
 router.delete('/:id',
     firebaseAuthAdmin,
     destroy)
 
-//cambiarlas
+
 router.get('/addScore/:id',
+    firebaseAuthUser,
     addScore)
 
 router.get('/substractScore/:id',
+    firebaseAuthUser,
     substractScore)
 
 export default router

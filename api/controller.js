@@ -10,7 +10,7 @@ export const create = ({ body }, res, next) =>
 
 export const showAll = (req, res, next) => 
     Habit.find()
-        .then((banks) => banks.map((bank) => bank.view(true)))
+        .then((habits) => habits.map((habit) => habit.view(true)))
         .then(success(res))
         .catch(next)
 
@@ -28,17 +28,49 @@ export const destroy = ({ params }, res, next) =>
         .then(success(res, 204))
         .catch(next)
 
-export const addScore = ({ params }, res, next) =>
-    Habit.findById(params.id)
+export const addScore = ({ body, params }, res, next) =>
+    Habit.findOne({id:params.id, owner:body.owner})
         .then(notFound(res))
         .then((habit) => habit.addScore())
         .then((habit) => habit.view(true))
         .then(success(res))
         .catch(next)
 export const substractScore = ({ params }, res, next) =>
-    Habit.findById(params.id)
+    Habit.findOne({id:params.id, owner:body.owner})
         .then(notFound(res))
         .then((habit) => habit.substractScore())
         .then((habit) => habit.view(true))
+        .then(success(res))
+        .catch(next)
+
+export const showMine = ({body}, res, next) => 
+    Habit.find({owner:body.owner})
+        .then((habits) => habits.map((habit) => habit.view(true)))
+        .then(success(res))
+        .catch(next)
+
+export const showAllMine = ({params, body}, res, next) =>
+    Habit.findOne({id:params.id, owner:body.owner})
+        .then(notFound(res))
+        .then((habit) => habit.view(true))
+        .then(success(res))
+        .catch(next)
+
+export const deleteMine = ({params, body}, res, next) => 
+    Habit.findOne({id:params.id, owner:body.owner})
+        .then(notFound(res))
+        .then((habit) => habit.remove())
+        .then(success(res, 204))
+        .catch(next)
+
+export const myScore = ({body}, res, next) =>
+    Habit.find({owner:body.owner})
+        .then((habits) => {
+            let result = { score:0}
+            for(let i = 0; i < habits.length; i++){
+                result.score += habits[i].score
+            }
+            return result
+        })
         .then(success(res))
         .catch(next)
