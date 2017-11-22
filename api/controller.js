@@ -40,7 +40,7 @@ export const addScore = ({ body, params }, res, next) =>
         .then((habit) => habit.view(true))
         .then(success(res))
         .catch(next)
-export const substractScore = ({ params }, res, next) =>
+export const substractScore = ({ params, body }, res, next) =>
     Habit.findOne({_id:params.id, owner:body.owner})
         .then(notFound(res))
         .then((habit) => habit.substractScore())
