@@ -4,7 +4,7 @@ import { success, notFound } from './middleware/response'
 
 export const create = ({ body }, res, next) => 
     Habit.create(body)
-        .then((habit) => habit.view(false))
+        .then((habit) => habit.view(true))
         .then(success(res, 201))
         .catch(next)
 
@@ -14,7 +14,7 @@ export const showAll = (req, res, next) =>
         .then(success(res))
         .catch(next)
 
-export const show = ({ params }, res, next) =>
+export const show = ({ params }, res, next) => 
     Habit.findById(params.id)
         .then(notFound(res))
         .then((habit) => habit.view(true))
@@ -29,14 +29,19 @@ export const destroy = ({ params }, res, next) =>
         .catch(next)
 
 export const addScore = ({ body, params }, res, next) =>
-    Habit.findOne({id:params.id, owner:body.owner})
+    Habit.findOne({_id:params.id, owner:body.owner})
+        .then((habit) => {
+            console.log(habit)
+            console.log(body, params)
+            return habit
+        })
         .then(notFound(res))
         .then((habit) => habit.addScore())
         .then((habit) => habit.view(true))
         .then(success(res))
         .catch(next)
 export const substractScore = ({ params }, res, next) =>
-    Habit.findOne({id:params.id, owner:body.owner})
+    Habit.findOne({_id:params.id, owner:body.owner})
         .then(notFound(res))
         .then((habit) => habit.substractScore())
         .then((habit) => habit.view(true))
@@ -44,15 +49,15 @@ export const substractScore = ({ params }, res, next) =>
         .catch(next)
 
 export const showMine = ({body}, res, next) => 
-    Habit.find({owner:body.owner})
-        .then((habits) => habits.map((habit) => habit.view(true)))
+    Habit.findOne({owner:body.owner})
+        .then((habit) => habit.view(true))
         .then(success(res))
         .catch(next)
 
-export const showAllMine = ({params, body}, res, next) =>
-    Habit.findOne({id:params.id, owner:body.owner})
+export const showAllMine = ({body}, res, next) =>
+    Habit.find({owner:body.owner})
         .then(notFound(res))
-        .then((habit) => habit.view(true))
+        .then((habits) => habits.map((habit) => habit.view(true)))
         .then(success(res))
         .catch(next)
 

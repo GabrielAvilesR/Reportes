@@ -16,7 +16,8 @@ const habitSchema = new Schema({
         enum:["easy", "normal", "hard"]
     },
     score:{
-        type:Number
+        type:Number,
+        default:0
     },
     owner:{
         type:String,

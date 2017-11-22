@@ -7,8 +7,14 @@ admin.initializeApp({
 const DB = admin.database()
 
 export const firebaseAuthUser = (req, res, next) => {
-    if(req.body.token){
-        admin.auth().verifyIdToken(req.body.token)
+    let token;
+    if(req.body.token) {
+        token = req.body.token
+    }else if(req.query.token){
+        token = req.query.token
+    }
+    if(token){
+        admin.auth().verifyIdToken(token)
             .then((decodedToken) => {
                 DB.ref('users/' + decodedToken.uid).once('value').then(function(snapshot) {
                     if(snapshot.val().role == 'user'){
@@ -29,11 +35,16 @@ export const firebaseAuthUser = (req, res, next) => {
     }
 }
 export const firebaseAuthAdmin = (req, res, next) => {
-    if(req.body.token){
-        admin.auth().verifyIdToken(req.body.token)
+    let token;
+    if(req.body.token) {
+        token = req.body.token
+    }else if(req.query.token){
+        token = req.query.token
+    }
+    if(token){
+        admin.auth().verifyIdToken(token)
             .then((decodedToken) => {
                 DB.ref('users/' + decodedToken.uid).once('value').then(function(snapshot) {
-                    console.log(snapshot.val());
                     if(snapshot.val().role == 'admin'){
                         next()
                     }else{
