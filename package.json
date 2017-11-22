@@ -6,17 +6,20 @@
   "scripts": {
     "start": "node .",
     "nodemon": "nodemon .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --compilers js:babel-core/register"
   },
   "author": "Gabriel Avilés Robles",
   "license": "ISC",
   "devDependencies": {
     "babel-eslint": "^7.0.0",
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
     "dotenv-safe": "^4.0.3",
     "eslint": "^3.3.1",
     "eslint-config-standard": "^6.0.0",
     "eslint-plugin-promise": "^3.0.0",
     "eslint-plugin-standard": "^2.0.0",
+    "mocha": "^4.0.1",
     "nodemon": "^1.12.0"
   },
   "dependencies": {
@@ -33,6 +36,8 @@
     "express": "^4.13.4",
     "firebase-admin": "^5.5.0",
     "lodash": "^4.13.1",
-    "mongoose": "^4.4.19"
+    "mocha-cli": "^1.0.1",
+    "mongoose": "^4.4.19",
+    "node-cli": "^0.1.0"
   }
 }

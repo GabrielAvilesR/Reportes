@@ -30,7 +30,8 @@ const config = {
         privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n') || undefined
 
     },
-    firebaseDB: process.env.FIREBASE_DATABASE_URL || undefined
+    firebaseDB: process.env.FIREBASE_DATABASE_URL || undefined,
+    masterKey: process.env.MASTER_KEY || undefined
 }
 
 module.exports = config

@@ -14,7 +14,7 @@ app.use(bodyParser.json())
 app.use(cors())
 
 app.use('/habits', habitsApi)
-const server = http.createServer(app)
+export const server = http.createServer(app)
 
 mongoose.connect(mongo.uri, {useMongoClient:true});
 
