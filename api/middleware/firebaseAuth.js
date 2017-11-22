@@ -7,6 +7,7 @@ admin.initializeApp({
 const DB = admin.database()
 
 export const firebaseAuthUser = (req, res, next) => {
+    console.log(req.body)
     let token;
     if(req.body.token) {
         token = req.body.token
@@ -18,7 +19,7 @@ export const firebaseAuthUser = (req, res, next) => {
             .then((decodedToken) => {
                 DB.ref('users/' + decodedToken.uid).once('value').then(function(snapshot) {
                     if(snapshot.val().role == 'user'){
-                        req.body.owner = decodedToken.uid;
+                        req.body.owner = decodedToken.uid;  
                         next()
                     }else{
                         res.status(401).send("Solo es para users")
