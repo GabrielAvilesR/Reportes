@@ -43,7 +43,6 @@ router.get('/substractScore/:id',
     substractScore)
 //admin
 router.get('/',
-firebaseAuthUser,
 showAll)
 
 router.get('/:id',

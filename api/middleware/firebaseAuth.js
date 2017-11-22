@@ -7,7 +7,6 @@ admin.initializeApp({
 const DB = admin.database()
 
 export const firebaseAuthUser = (req, res, next) => {
-    console.log(req.body)
     let token;
     if(req.body.token) {
         token = req.body.token
